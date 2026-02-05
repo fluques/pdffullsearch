@@ -1,0 +1,89 @@
+services:
+  pdffullsearch:
+    image: pdffullsearch
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --nothreading --noreload"]
+    ports:
+      - 8000:8000
+      - 5678:5678
+
+    depends_on:
+      - db
+      - elasticsearch
+      - ollama
+      - tika
+    networks:
+      - elk-network
+    restart: always
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    entrypoint:
+      [
+        "/bin/bash",
+        "-c",
+        "ollama serve & sleep 5 && ollama pull nomic-embed-text && wait",
+      ]
+    volumes:
+      - ollama-models:/root/.ollama 
+    networks:
+      - elk-network
+    restart: always
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: elasticsearch
+    
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - elk-network
+    restart: always
+
+  tika:
+    # Use the official Apache Tika Docker image from Docker Hub
+    image: apache/tika:latest
+    # Map port 9998 on the host to port 9998 in the container
+    ports:
+      - "9998:9998"
+    # Optional: ensure container restarts if it stops unexpectedly
+    networks:
+      - elk-network
+    restart: always
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: django_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - elk-network
+    restart: always
+      
+networks:
+  elk-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  esdata:
+    driver: local
+  ollama-models:
+    driver: local
+
