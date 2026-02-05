@@ -62,7 +62,8 @@ class PDFFileDocument(Document):
     class Django:
         model = PDFFile
         fields = [
-            "path",
+            "name",
+            "file_path",
             "content",
             "metadata",
             "created_datetime",

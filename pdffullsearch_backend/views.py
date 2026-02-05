@@ -55,5 +55,14 @@ class FileUploadView(APIView):
         single_embedding = client.embed(model='nomic-embed-text',input=parsed_data['content'])
         file_path = os.path.join('uploads', file_obj.name)
         saved_path = default_storage.save(file_path, ContentFile(file_content))
+
+        pdf_file = PDFFile.objects.create(
+            name=file_obj.name,
+            file_path=saved_path,
+            content=parsed_data['content'],
+            embedding=single_embedding,
+            metadata=parsed_data['metadata']
+        )
+        pdf_file.save()
     
         return Response(status=204)
