@@ -1,0 +1,39 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Build') { 
+            steps {
+                sh "echo building"
+                sh "cp env.example .env"
+                sh "docker compose -f compose.yaml up -d --build"
+            }
+        }
+        stage('Test') { 
+            steps {
+                sh "echo testing"
+            }
+        }
+        stage('Deploy to staging') { 
+            steps {
+                sh "echo deploying" 
+            }
+        }
+
+        stage('Deploy to production') { 
+            steps {
+                sh "echo deploying" 
+            }
+        }
+    }
+
+post{
+    failure{
+        mail bcc: '', body: "<b> Failed Jenkins Buid </b><br>Project: ${env.JOB_NAME} \
+         <br> Build Number: ${env.BUILD_NUMBER} <br> Build URL: ${env.BUILD_URL} ", cc: '', \
+         charset: 'UTF-8', from: 'jenkins@gmendez.net', mimeType: 'text/html', replyTo: '', \
+         subject: "Jenkins Build Failed: ${env.JOB_NAME} - Build # ${env.BUILD_NUMBER}", \
+         to:'ing.fernando.luque@gmail.com'; 
+         }
+    }
+
+}
