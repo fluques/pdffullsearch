@@ -1,20 +1,19 @@
 pipeline {
     agent any 
-    plugins {
-        // This ensures the plugin is available for the pipeline
-        dockerComposeBuildStep()
-    }
     stages {
         stage('Build') { 
             steps {
                 sh "echo building"
                 sh "cp env.sample .env"
-                dockerComposeUp composeFile: 'docker-compose.yml', detached: true
+                                script {
+                    docker.build("pdffullsearch:latest")
+                }
             }
         }
         stage('Test') { 
             steps {
                 sh "echo testing"
+                sh 'docker-compose -f compose.yml up --build -d'
             }
         }
         stage('Deploy to staging') { 
