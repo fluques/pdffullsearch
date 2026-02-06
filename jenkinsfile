@@ -1,11 +1,15 @@
 pipeline {
     agent any 
+    plugins {
+        // This ensures the plugin is available for the pipeline
+        dockerComposeBuildStep()
+    }
     stages {
         stage('Build') { 
             steps {
                 sh "echo building"
                 sh "cp env.sample .env"
-                sh "docker compose -f compose.yaml up -d --build"
+                dockerComposeUp composeFile: 'docker-compose.yml', detached: true
             }
         }
         stage('Test') { 
