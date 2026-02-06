@@ -3,18 +3,14 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                   dockerComposeUp(
-                    // Example parameters (check the snippet generator for actual parameters)
-                    composeFile: 'compose.yml',
-                    projectName: 'pdffullsearch',
-                    waitForCompletion: true
-                )
+                sh "echo building"
+                sh "cp env.sample .env"
+                sh 'docker-compose -f compose.yml up --build -d'
             }
         }
         stage('Test') { 
             steps {
                 sh "echo testing"
-                sh 'docker-compose -f compose.yml up --build -d'
             }
         }
         stage('Deploy to staging') { 
