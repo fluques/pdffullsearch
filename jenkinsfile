@@ -3,11 +3,12 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh "echo building"
-                sh "cp env.sample .env"
-                                script {
-                    docker.build("pdffullsearch:latest")
-                }
+                   dockerComposeUp(
+                    // Example parameters (check the snippet generator for actual parameters)
+                    composeFile: 'compose.yml',
+                    projectName: 'pdffullsearch',
+                    waitForCompletion: true
+                )
             }
         }
         stage('Test') { 
