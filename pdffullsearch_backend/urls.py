@@ -2,7 +2,7 @@ from django.urls import path, include, re_path
 from rest_framework import routers
 
 
-from pdffullsearch_backend.views import UserViewSet, CategoryViewSet, PDFFileViewSet, index, FileUploadView
+from pdffullsearch_backend.views import UserViewSet, CategoryViewSet, PDFFileViewSet, FileUploadView
 
 router = routers.DefaultRouter()
 router.register(r"user", UserViewSet)
