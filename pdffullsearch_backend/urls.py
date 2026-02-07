@@ -11,6 +11,5 @@ router.register(r"pdffile", PDFFileViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("index", index, name="index"),
     re_path(r'^upload/(?P<filename>[^/]+)$', FileUploadView.as_view()),
 ]
