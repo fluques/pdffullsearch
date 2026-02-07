@@ -16,19 +16,6 @@ from tika import parser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-
-
-
-def index(request):
-    client = ollama.Client(host=settings.OLLAMA_API_URL)
-    single_embedding = client.embed(
-    model='nomic-embed-text',
-    input='The quick brown fox jumps over the lazy dog.')
-    return HttpResponse(f"Embedding: {single_embedding}")
-
-
-
-
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
