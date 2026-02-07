@@ -41,8 +41,6 @@ class FileUploadView(APIView):
 
         parsed_data = parser.from_buffer(file_content, serverEndpoint=settings.TIKA_SERVER_ENDPOINT)
 
-
-
         file_path = os.path.join('uploads', file_obj.name)
         saved_path = default_storage.save(file_path, ContentFile(file_content))
 
