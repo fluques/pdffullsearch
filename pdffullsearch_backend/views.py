@@ -13,6 +13,8 @@ from django.core.files.storage import default_storage
 import os
 import ollama
 from tika import parser
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 
 
 
@@ -51,8 +53,9 @@ class FileUploadView(APIView):
         file_content = file_obj.read()
 
         parsed_data = parser.from_buffer(file_content, serverEndpoint=settings.TIKA_SERVER_ENDPOINT)
-        client = ollama.Client(host=settings.OLLAMA_API_URL)
-        single_embedding = client.embed(model='nomic-embed-text',input=parsed_data['content'])
+
+
+
         file_path = os.path.join('uploads', file_obj.name)
         saved_path = default_storage.save(file_path, ContentFile(file_content))
 
@@ -60,9 +63,10 @@ class FileUploadView(APIView):
             name=file_obj.name,
             file_path=saved_path,
             content=parsed_data['content'],
-            embedding=single_embedding,
             metadata=parsed_data['metadata']
         )
         pdf_file.save()
+
+
     
         return Response(status=204)

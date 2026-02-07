@@ -35,5 +35,6 @@ python manage.py makemigrations && \
 python manage.py migrate && \
 python manage.py collectstatic --noinput && \
 python manage.py auto_createsuperuser --username admin --email admin@example.com --password admin && \
+python manage.py search_index --create && \
 gunicorn --bind 0.0.0.0:8000 pdffullsearch.wsgi"]
 

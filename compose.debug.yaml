@@ -10,10 +10,14 @@ services:
       - 5678:5678
 
     depends_on:
-      - db
-      - elasticsearch
-      - ollama
-      - tika
+      elasticsearch:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+      tika:
+        condition: service_started
     networks:
       - elk-network
     restart: always
@@ -26,7 +30,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "ollama serve & sleep 5 && ollama pull nomic-embed-text && wait",
+        "ollama serve & sleep 5 && ollama pull jina/jina-embeddings-v2-base-es && wait",
       ]
     volumes:
       - ollama-models:/root/.ollama 
@@ -45,6 +49,12 @@ services:
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     volumes:
       - esdata:/usr/share/elasticsearch/data
     networks:
@@ -70,6 +80,12 @@ services:
       POSTGRES_DB: django_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     networks:
