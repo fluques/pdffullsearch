@@ -47,7 +47,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     healthcheck:
-      test: ["CMD-SHELL", "curl -fs http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s || exit 1"]
+      test: ["CMD-SHELL", "curl -fs http://elasticsearch:9200/_cluster/health?wait_for_status=yellow&timeout=5s || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
