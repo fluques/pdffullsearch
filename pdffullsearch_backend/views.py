@@ -57,7 +57,7 @@ class PDFFileViewSet(viewsets.ModelViewSet):
 
         # Send Kafka message    
         asyncio.run(send_kafka_message({'id': pdf_file.id}))
-        return JsonResponse(status=204)
+        return JsonResponse({"result": "File uploaded successfully", "id": pdf_file.id,"file_path": pdf_file.file_path}, status=200)
     
 
     @action(detail=False, methods=['get'],url_path=r'knn_search')
