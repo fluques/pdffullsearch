@@ -58,14 +58,6 @@ class PDFFileDocument(Document):
         model = PDFFile # The Django model
         ignore_signals = True
 
-    '''def prepare_file_sections(self, instance):
-        # Call the model method to get the data
-        return instance.index_pdffile_with_embeddings() 
-    
-    def prepare_id(self, instance):
-        # Call the model method to get the data
-        return str(instance.id)'''
-
     def index_pdffile_with_embeddings(self, pdf_file_id):
         pdf_file = PDFFile.objects.get(id=pdf_file_id)
         doc = PDFFileDocument()
