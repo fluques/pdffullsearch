@@ -15,6 +15,7 @@ class Command(BaseCommand):
                 try:
                     es = connections.get_connection()
                     es.ping()
+                    self.stdout.write(self.style.SUCCESS(f"Successfully connected to Elasticsearch on attempt {tries + 1}"))
                     break
                 except Exception as e:
                     tries += 1
