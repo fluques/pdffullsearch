@@ -39,7 +39,7 @@ class DenseVectorField(DEDField, ESDenseVector):
 
 @registry.register_document
 class PDFFileDocument(Document):
-
+    id = fields.IntegerField(attr='id')
     file_sections = fields.NestedField(
         properties={
             'file_section_text': fields.TextField(),
@@ -47,13 +47,15 @@ class PDFFileDocument(Document):
         }
     )
 
+    def generate_id(self, instance):
+        return str(instance.id)
+
     class Index:
         name = 'pdf_files_index'
         
 
     class Django:
         model = PDFFile # The Django model
-        fields =['id']
         ignore_signals = True
 
     '''def prepare_file_sections(self, instance):
@@ -65,8 +67,9 @@ class PDFFileDocument(Document):
         return str(instance.id)'''
 
     def index_pdffile_with_embeddings(self, pdf_file_id):
-        doc = PDFFileDocument() 
         pdf_file = PDFFile.objects.get(id=pdf_file_id)
+        doc = PDFFileDocument()
+        doc.meta.id = pdf_file.id
         doc.id = pdf_file.id
         file_sections = []
         # Logic to split content into chunks and generate embeddings
