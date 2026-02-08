@@ -1,3 +1,6 @@
+import asyncio
+import json
+from asgiref.sync import sync_to_async
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
@@ -11,10 +14,9 @@ from pdffullsearch_backend.serializers import UserSerializer, PDFFileSerializer,
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 import os
-import ollama
 from tika import parser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
+from pdffullsearch_backend.kafka_client import send_kafka_message
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
@@ -52,6 +54,9 @@ class FileUploadView(APIView):
         )
         pdf_file.save()
 
+        # Send Kafka message    
+        asyncio.run(send_kafka_message({'id': pdf_file.id}))
+        #sync_to_async(send_kafka_message, thread_sensitive=True)(settings.KAFKA_TOPIC, {'id': pdf_file.id})
 
     
         return Response(status=204)
