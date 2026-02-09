@@ -19,16 +19,13 @@ Rest API to index pdf files into elasticsearch database.
     ```
     $ compose -f .\compose.yaml  up --build --force-recreate
     ```
-```bash
-# Your bash commands go here
-echo "Hello World"
-./my_script.sh
-```
 
 ## Running on service
-    ```bash
-    $ curl -XGET http://127.0.0.1:8989
-    ```
+```bash
+# Your bash commands go here
+curl -XGET http://127.0.0.1:8989
+```
+
 
 ## Usage
 
