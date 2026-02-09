@@ -4,14 +4,14 @@
 Dockerized rest API to index pdf files into elasticsearch database. To search using Ollama embeddings with vectorial index or full text search with inverted index.
 
 ## Components
-- python
-- nginx
-- django
-- ollama
-- elasticsearch
-- kafka
-- tika
-- postgres
+- [Python](https://www.python.org/)
+- [Nginx](https://nginx.org/)
+- [Django](https://www.djangoproject.com/)
+- [Ollama](https://ollama.com/)
+- [Elasticsearch](https://www.elastic.co/)
+- [Apache Kafka](https://kafka.apache.org/)
+- [Apache Tika](https://tika.apache.org/)
+- [Postgres](https://www.postgresql.org/)
 
 
 ## Requirements
