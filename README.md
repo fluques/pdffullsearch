@@ -29,8 +29,11 @@ git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
 ```bash
 cd pdffullsearch
 ```
-
-3. Run docker-compose file:
+3. Set default settings:
+```bash
+cp env.default .env
+```
+4. Run docker-compose file:
 ```bash
 docker compose -f .\compose.yaml  up --build --force-recreate
 ```
@@ -99,8 +102,6 @@ payload ={
 response = requests.get(url, json=payload)
 ```
 
-### env.default
-The settings in the rest api are set with evironment variables set on the env.default.
 
 
 
