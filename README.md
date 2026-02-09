@@ -22,7 +22,6 @@ Rest API to index pdf files into elasticsearch database.
 
 ## Running on service
 ```bash
-# Your bash commands go here
 curl -XGET http://127.0.0.1:8989
 ```
 
