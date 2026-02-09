@@ -99,3 +99,8 @@ payload ={
 response = requests.get(url, json=payload)
 ```
 
+### env.default
+The settings of the rest api options are set with evironment variables.
+
+
+
