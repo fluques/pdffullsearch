@@ -21,7 +21,7 @@ Rest API to index pdf files into elasticsearch database.
     ```
 
 ## Running on service
-    ```
+    ```python
     http://127.0.0.1:8989
     ```
 
