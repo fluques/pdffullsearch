@@ -100,7 +100,7 @@ response = requests.get(url, json=payload)
 ```
 
 ### env.default
-The settings of the rest api options are set with evironment variables.
+The settings in the rest api are set with evironment variables set on the env.default.
 
 
 
