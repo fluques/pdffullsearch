@@ -32,7 +32,7 @@ cd pdffullsearch
 
 3. Run docker-compose file:
 ```bash
-compose -f .\compose.yaml  up --build --force-recreate
+docker compose -f .\compose.yaml  up --build --force-recreate
 ```
 
 ## Running service on:
