@@ -7,15 +7,12 @@ Rest API to index pdf files into elasticsearch database.
 1. Docker and compose
     [Docker installation script](https://docs.docker.com/engine/install/ubuntu/)
 
-```console
-foo@bar:~$ whoami
-foo
-```
+
 
 ## Installation
 1. Clone the repository:
    ```console
-   git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
+   foo@bar:~$ git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
    ```
 
 2. Run docker-compose file:
