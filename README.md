@@ -20,27 +20,31 @@ git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
 compose -f .\compose.yaml  up --build --force-recreate
 ```
 
-## Running on service
+## Running service on:
 ```bash
-curl -XGET http://127.0.0.1:8989
+http://127.0.0.1:8989
 ```
 
 
-## Usage
+## Curl Usage
 
  ### Upload a pdf file
 
 ```bash
-curl -XPUT http://127.0.0.1:8989/api/pdffile/upload/filename/
+curl -XPUT --data-binary "@filename.pdf" http://127.0.0.1:8989/backend/pdffile/upload/filename.pdf/
 ``` 
 
 ### Search knn with embeddings
 ```bash
-$ curl -XGET http://127.0.0.1:8989/api/pdffile/knn_search/
+curl -XGET http://127.0.0.1:8989/backend/pdffile/knn_search/ \
+  -H "Content-Type: application/json" \
+  -d '{"query": "facturas de vuelos de avio", "k": "3", "candidates":"100"}'
 ```
 
 ### Search full text with query text
 ```bash
-$ curl -XGET http://127.0.0.1:8989/api/pdffile/fulltext_search/
+curl -XGET http://127.0.0.1:8989/api/pdffile/fulltext_search/ \
+  -H "Content-Type: application/json" \
+  -d '{"query": "facturas de vuelos de avio"}'
 ```
 
