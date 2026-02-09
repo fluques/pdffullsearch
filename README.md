@@ -1,7 +1,18 @@
 # PDFFULLSEARCH
 
 ## Description.
-Rest API to index pdf files into elasticsearch database.
+Dockerized rest API to index pdf files into elasticsearch database. To search using Ollama embeddings with vectorial index or full text search with inverted index.
+
+## Components
+- python
+- nginx
+- django
+- ollama
+- elasticsearch
+- kafka
+- tika
+- postgres
+
 
 ## Requirements
 1. Docker and compose
