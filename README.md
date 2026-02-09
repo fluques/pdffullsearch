@@ -19,7 +19,7 @@ git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
 cd pdffullsearch
 ```
 
-2. Run docker-compose file:
+3. Run docker-compose file:
 ```bash
 compose -f .\compose.yaml  up --build --force-recreate
 ```
@@ -30,17 +30,17 @@ http://127.0.0.1:8989
 ```
 
 
-## Curl Usage
+## Curl usage
 
  ### Upload a pdf file
 
 ```bash
-curl -XPUT --data-binary "@filename.pdf" http://127.0.0.1:8989/backend/pdffile/upload/filename.pdf/
+curl -XPUT --data-binary "@filename.pdf" http://127.0.0.1:8989/api/pdffile/upload/filename.pdf/
 ``` 
 
 ### Search knn with embeddings
 ```bash
-curl -XGET http://127.0.0.1:8989/backend/pdffile/knn_search/ \
+curl -XGET http://127.0.0.1:8989/api/pdffile/knn_search/ \
   -H "Content-Type: application/json" \
   -d '{"query": "query text", "k": "3", "candidates":"100"}'
 ```
@@ -50,5 +50,38 @@ curl -XGET http://127.0.0.1:8989/backend/pdffile/knn_search/ \
 curl -XGET http://127.0.0.1:8989/api/pdffile/fulltext_search/ \
   -H "Content-Type: application/json" \
   -d '{"query": "query text"}'
+```
+
+
+## Python usage
+
+ ### Upload a pdf file
+
+```python
+url = 'http://127.0.0.1:8989/api/pdffile/upload/filename.pdf/' 
+# Open the file in binary read mode ('rb')
+with open('filename.pdf', 'rb') as f:
+    files = {'file': f} 
+    response = requests.put(url, files=files)
+``` 
+
+### Search knn with embeddings
+```python
+url = 'http://127.0.0.1:8989/api/pdffile/knn_search/'
+payload ={
+    'query':'query text',
+    'k' : '3',
+    'candidates': '100'
+}
+response = requests.get(url, json=payload)
+```
+
+### Search full text with query text
+```python
+url = 'http://127.0.0.1:8989/api/pdffile/fulltext_search/' 
+payload ={
+    'query':'query text'
+}
+response = requests.get(url, json=payload)
 ```
 
