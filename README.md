@@ -21,24 +21,24 @@ Rest API to index pdf files into elasticsearch database.
     ```
 
 ## Running on service
-    ```python
-    http://127.0.0.1:8989
+    ```
+    $ curl -XGET http://127.0.0.1:8989
     ```
 
 ## Usage
 
  ### Upload a pdf file
     ```
-    curl -XPUT http://127.0.0.1:8989/api/pdffile/upload/filename/
+    $ curl -XPUT http://127.0.0.1:8989/api/pdffile/upload/filename/
     ```
 
 ### Search knn with embeddings
     ```
-    curl -XGET http://127.0.0.1:8989/api/pdffile/knn_search/
+    $ curl -XGET http://127.0.0.1:8989/api/pdffile/knn_search/
     ```
 
 ### Search full text with query text
     ```
-    curl -XGEThttp://127.0.0.1:8989/api/pdffile/fulltext_search/
+    $ curl -XGEThttp://127.0.0.1:8989/api/pdffile/fulltext_search/
     ```
 
