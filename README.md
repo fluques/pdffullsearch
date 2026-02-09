@@ -9,7 +9,7 @@ Rest API to index pdf files into elasticsearch database.
 
 ## Installation
 1. Clone the repository:
-   ```bash
+   ```console
    git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
    ```
 
@@ -19,22 +19,22 @@ Rest API to index pdf files into elasticsearch database.
     ```
 
 ## Running on service
-    ```bash
+    ```console
     http://127.0.0.1:8989
     ```
 
 ## Endpoint to upload a pdf file
-    ```bash
+    ```console
     http://127.0.0.1:8989/api/pdffile/upload/filename/
     ```
 
 ## Endpoint to search knn with embeddings
-    ```bash
+    ```console
     http://127.0.0.1:8989/api/pdffile/knn_search/
     ```
 
 ## Endpoint to search full text with query text
-    ```bash
+    ```console
     http://127.0.0.1:8989/api/pdffile/fulltext_search/
     ```
 
