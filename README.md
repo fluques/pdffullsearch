@@ -37,3 +37,8 @@ Rest API to index pdf files into elasticsearch database.
     '''bash
     http://127.0.0.1:8989/api/pdffile/fulltext_search/
     '''
+
+```python
+s = "Python syntax highlighting"
+print(s)
+```
