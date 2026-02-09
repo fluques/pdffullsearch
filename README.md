@@ -58,6 +58,7 @@ curl -XGET http://127.0.0.1:8989/api/pdffile/fulltext_search/ \
  ### Upload a pdf file
 
 ```python
+import requests
 url = 'http://127.0.0.1:8989/api/pdffile/upload/filename.pdf/' 
 # Open the file in binary read mode ('rb')
 with open('filename.pdf', 'rb') as f:
@@ -67,6 +68,7 @@ with open('filename.pdf', 'rb') as f:
 
 ### Search knn with embeddings
 ```python
+import requests
 url = 'http://127.0.0.1:8989/api/pdffile/knn_search/'
 payload ={
     'query':'query text',
@@ -78,6 +80,7 @@ response = requests.get(url, json=payload)
 
 ### Search full text with query text
 ```python
+import requests
 url = 'http://127.0.0.1:8989/api/pdffile/fulltext_search/' 
 payload ={
     'query':'query text'
