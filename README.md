@@ -25,18 +25,20 @@ Rest API to index pdf files into elasticsearch database.
     http://127.0.0.1:8989
     ```
 
-## Endpoint to upload a pdf file
-    ```
-    http://127.0.0.1:8989/api/pdffile/upload/filename/
-    ```
-
-## Endpoint to search knn with embeddings
-    ```
-    http://127.0.0.1:8989/api/pdffile/knn_search/
-    ```
-
-## Endpoint to search full text with query text
-    ```
-    http://127.0.0.1:8989/api/pdffile/fulltext_search/
-    ```
 ## Usage
+
+ ### Upload a pdf file
+    ```
+    curl -XPUT http://127.0.0.1:8989/api/pdffile/upload/filename/
+    ```
+
+### Search knn with embeddings
+    ```
+    curl -XGET http://127.0.0.1:8989/api/pdffile/knn_search/
+    ```
+
+### Search full text with query text
+    ```
+    curl -XGEThttp://127.0.0.1:8989/api/pdffile/fulltext_search/
+    ```
+
