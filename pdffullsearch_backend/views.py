@@ -20,6 +20,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pdffullsearch_backend.kafka_client import send_kafka_message
 import ollama
 from elasticsearch import Elasticsearch
+import boto3
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
@@ -85,6 +86,43 @@ class PDFFileViewSet(viewsets.ModelViewSet):
         return JsonResponse({"count": len(recent), "query": text_query, "search_type": "fulltext", "results": recent}, status=200)
     
 
+    @action(detail=False, methods=['post'],url_path=r's3_upload')
+    def s3_upload(self, request):
+        data = json.loads(request.body)
+        bucket = data.get('bucket', None)
+        key = data.get('key', None) 
+        s3_path = data.get('s3_path', None)     
+        if not bucket:  
+            return JsonResponse({"error": "Bucket parameter is required."}, status=400)
+        
+        if not key:  
+            return JsonResponse({"error": "Key parameter is required."}, status=400)
+        
+        if not s3_path:  
+            return JsonResponse({"error": "S3 path parameter is required."}, status=400)
+        
+        boto3_client = boto3.client('s3')
+
+        file_path = os.path.join('uploads', key)
+        boto3_client.download_file(bucket, key, file_path)
+
+        with open(file_path, 'rb') as f:
+            file_content = f.read()
+            parsed_data = parser.from_buffer(file_content, serverEndpoint=settings.TIKA_SERVER_ENDPOINT)
+
+        pdf_file = PDFFile.objects.create(
+            name=key,
+            file_path=file_path,
+            content=parsed_data['content'],
+            metadata=parsed_data['metadata']
+        )
+        pdf_file.save()
+
+        # Send Kafka message    
+        asyncio.run(send_kafka_message({'id': pdf_file.id}))
+
+
+        return JsonResponse({"message": "File downloaded successfully"}, status=200)
 
     def get_embeddings(self,text):
         """
