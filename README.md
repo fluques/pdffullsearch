@@ -23,7 +23,7 @@ Dockerized rest API to index pdf files into elasticsearch database. To search us
 ## Installation
 1. Clone the repository:
 ```bash
-git clone https://gitlab.com/pdffullsearch/pdffullsearch.git
+git clone https://github.com/fluques/pdffullsearch.git
 ```
 2. Enter directory:
 ```bash
