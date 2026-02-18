@@ -13,14 +13,14 @@ ENV PYTHONUNBUFFERED=1
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
-WORKDIR /app
-COPY . /app
-
-
 RUN apt-get clean && apt-get -y update
 RUN apt-get -y install nginx systemctl
 COPY nginx.conf  /etc/nginx/sites-enabled/default
 RUN rm -f /var/log/nginx/* 
+
+
+WORKDIR /app
+COPY . /app
 
 
 
